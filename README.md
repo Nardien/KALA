@@ -14,6 +14,12 @@ which modulates the intermediate hidden representations of PLMs with domain know
 We validate the performance of our KALA on question answering and named entity recognition tasks on multiple datasets across various domains.
 The results show that, despite being computationally efficient, our KALA largely outperforms adaptive pre-training.
 
+## Installation
+```bash
+python -m pip install -r requirements.txt
+```
+If you face any issues on installing torch-geometric library, please refer to [torch-geometric github](https://github.com/pyg-team/pytorch_geometric).
+
 ## Dataset
 Please download the proper dataset from below, and place it into `dataset` folder.
 
