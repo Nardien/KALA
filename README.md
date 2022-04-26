@@ -1,11 +1,28 @@
-# Code Guide for ACL 2022 Submission "KALA: Knowledge-Augmented Language Model Adaptation"
+# KALA: Knowledge-Augmented Language Model Adaptation
 
-Since the Knowledge Graph Construction step needs external Entity Linker with cached index file and the BERT-base checkpoint fine-tuned on the Relation Extraction task, we do not expect that the reviewer to run the preprocessing step. Instead, we provide the preprocessed version of pre-constructed KG for NewsQA dataset including train, dev, and test set.
+Official Code Repository for the paper "KALA: Knowledge-Augmented Language Model Adaptation" (NAACL 2022): https://arxiv.org/abs/2204.10555.
+
+In this repository, we implement the training code for our KALA framework inclduing the preprocessing the task dataset.
+
+## Abstract
+Pre-trained language models (PLMs) have achieved remarkable success on various natural language understanding tasks.
+Simple fine-tuning of PLMs, on the other hand, might be suboptimal for domain-specific tasks because they cannot possibly cover knowledge from all domains.
+While adaptive pre-training of PLMs can help them obtain domain-specific knowledge, it requires a large training cost.
+Moreover, adaptive pre-training can harm the PLM's performance on the downstream task by causing catastrophic forgetting of its general knowledge.
+To overcome such limitations of adaptive pre-training for PLM adaptation, we propose a novel domain adaptation framework for PLMs coined as Knowledge-Augmented Language model Adaptation (KALA),
+which modulates the intermediate hidden representations of PLMs with domain knowledge, cosisting of entities and their relational facts.
+We validate the performance of our KALA on question answering and named entity recognition tasks on multiple datasets across various domains.
+The results show that, despite being computationally efficient, our KALA largely outperforms adaptive pre-training.
 
 ## Dataset
+Please download the proper dataset from below, and place it into `dataset` folder.
+
+Due to the license issue, we cannot directly provide the emrQA dataset. Please download the emrQA from here: https://github.com/panushri25/emrQA.
+
 Download path:
 
 ## Knowledge Graph Construction
+To construct the KG for each dataset, pleases follow the below instructions.
 If you are interested in how the KG is constructed, pleases refer to codes in `KGC` folder.
 
 1. Entity Extraction
