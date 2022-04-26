@@ -19,7 +19,7 @@ Please download the proper dataset from below, and place it into `dataset` folde
 
 Due to the license issue, we cannot directly provide the emrQA dataset. Please download the emrQA from here: https://github.com/panushri25/emrQA.
 
-Download path:
+Download path: [NewsQA](https://drive.google.com/file/d/1TZCOm6lGKaz4fm_QaCrZladN-7YJkjt2/view?usp=sharing)
 
 ## Knowledge Graph Construction
 To construct the KG for each dataset, pleases follow the below instructions.
@@ -42,7 +42,7 @@ python preprocess.py NewsQA test
 2. Knowledge Graph Construction
 Before start, please download pre-trained Relation Extraction model and place it on the `RE_checkpoint` directory. 
 
-Download path:
+Download path: [model.pth](https://drive.google.com/file/d/1XrUUb6aDWTTPAV_CfTBWGh6sYr89w9OW/view?usp=sharing)
 
 Belows are the example scripts for KG construction on the NewsQA dataset.
 
