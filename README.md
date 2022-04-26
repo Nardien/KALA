@@ -60,3 +60,21 @@ python run_qa.py
 ```
 
 This code runs 2 epochs of training on NewsQA dataset. It costs approximately 3 hours on single GeForce RTX 2080 Ti GPU.
+
+## Citation
+If you found the provided code with our paper useful, we kindly requiest that you cite our work.
+```BibTex
+@article{DBLP:journals/corr/abs-2204-10555,
+  author    = {Minki Kang and
+               Jinheon Baek and
+               Sung Ju Hwang},
+  title     = {{KALA:} Knowledge-Augmented Language Model Adaptation},
+  journal   = {CoRR},
+  volume    = {abs/2204.10555},
+  year      = {2022},
+  url       = {https://doi.org/10.48550/arXiv.2204.10555},
+  doi       = {10.48550/arXiv.2204.10555},
+  eprinttype = {arXiv},
+  eprint    = {2204.10555},
+}
+```
