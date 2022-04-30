@@ -58,6 +58,8 @@ python construct.py --domain NewsQA --fold dev
 python construct.py --domain NewsQA --fold test 
 ```
 
+While the example scripts above are for question answering tasks, you can similarly run the code for named entity recognition tasks via the file: {filename}_ner.py.
+
 ## Training
 After preprocessing, run below code to train the model for NewsQA dataset, within KALA framework.
 
@@ -70,17 +72,10 @@ This code runs 2 epochs of training on NewsQA dataset. It costs approximately 3 
 ## Citation
 If you found the provided code with our paper useful, we kindly requiest that you cite our work.
 ```BibTex
-@article{DBLP:journals/corr/abs-2204-10555,
-  author    = {Minki Kang and
-               Jinheon Baek and
-               Sung Ju Hwang},
-  title     = {{KALA:} Knowledge-Augmented Language Model Adaptation},
-  journal   = {CoRR},
-  volume    = {abs/2204.10555},
-  year      = {2022},
-  url       = {https://doi.org/10.48550/arXiv.2204.10555},
-  doi       = {10.48550/arXiv.2204.10555},
-  eprinttype = {arXiv},
-  eprint    = {2204.10555},
+@article{kang2022kala,
+  title={KALA: Knowledge-Augmented Language Model Adaptation},
+  author={Kang, Minki and Baek, Jinheon and Hwang, Sung Ju},
+  journal={arXiv preprint arXiv:2204.10555},
+  year={2022}
 }
 ```

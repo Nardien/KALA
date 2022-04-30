@@ -12,7 +12,8 @@ from transformers.models.bert.modeling_bert import (BertPreTrainedModel,
                                                     BertEmbeddings,
                                                     BertEncoder,
                                                     BertPooler,
-                                                    BertLayer,)
+                                                    BertLayer,
+                                                    TokenClassifierOutput)
 from models.KALA.KFM import KFM
 
 class BertForExtractiveQA(BertPreTrainedModel):
@@ -91,6 +92,94 @@ class BertForExtractiveQA(BertPreTrainedModel):
             sequence_output
         ) + (outputs[1:]) # Including sequence_output and pooled_output
         return ((total_loss,) + output) if total_loss is not None else output
+
+class BertForNER(BertPreTrainedModel):
+    def __init__(self, config, args, entity_embeddings):
+        super().__init__(config)
+
+        self.num_labels = config.num_labels
+
+        self.bert = CustomBertModel(config)
+
+        classifier_dropout = (
+            config.classifier_dropout if config.classifier_dropout is not None else config.hidden_dropout_prob
+        )
+        self.dropout = nn.Dropout(classifier_dropout)
+        self.classifier = nn.Linear(config.hidden_size, config.num_labels)
+
+        self.kfms = KFM(args, len(args.loc_layer), entity_embeddings)
+
+    def forward(
+        self,
+        input_ids=None,
+        attention_mask=None,
+        token_type_ids=None,
+        position_ids=None,
+        head_mask=None,
+        inputs_embeds=None,
+        labels=None,
+        output_attentions=None,
+        output_hidden_states=None,
+        return_dict=None,
+        mention_positions=None, # Belows are the additional inputs
+        nodes=None,
+        edge_index=None,
+        edge_attr=None,
+        graph_batch=None,
+        local_indicator=None,
+    ):
+
+        return_dict = return_dict if return_dict is not None else self.config.use_return_dict
+
+        # Build Input for Adaptor
+        kfm_inputs = {
+            'mention_positions': mention_positions,
+            'nodes': nodes,
+            'edge_index': edge_index,
+            'graph_batch': graph_batch,
+            'edge_attr': edge_attr,
+            'local_indicator': local_indicator,
+        }
+
+        outputs = self.bert(
+            input_ids,
+            attention_mask=attention_mask,
+            token_type_ids=token_type_ids,
+            position_ids=position_ids,
+            head_mask=head_mask,
+            inputs_embeds=inputs_embeds,
+            kfms=self.kfms,
+            kfm_inputs=kfm_inputs,
+        )
+        sequence_output = outputs[0]
+
+        sequence_output = self.dropout(sequence_output)
+        logits = self.classifier(sequence_output)
+
+        loss = None
+        if labels is not None:
+            loss_fct = CrossEntropyLoss()
+            # Only keep active parts of the loss
+            if attention_mask is not None:
+                active_loss = attention_mask.view(-1) == 1
+                active_logits = logits.view(-1, self.num_labels)
+                active_labels = torch.where(
+                    active_loss, labels.view(-1), torch.tensor(loss_fct.ignore_index).type_as(labels)
+                )
+                loss = loss_fct(active_logits, active_labels)
+            else:
+                loss = loss_fct(logits.view(-1, self.num_labels), labels.view(-1))
+
+        if not return_dict:
+            output = (logits,) + outputs[2:]
+            return ((loss,) + output) if loss is not None else output
+
+        return TokenClassifierOutput(
+            loss=loss,
+            logits=logits,
+            # hidden_states=outputs.hidden_states,
+            # attentions=outputs.attentions,
+        )
 
 """ Source of Below Code
 https://github.com/huggingface/transformers/blob/master/src/transformers/models/bert/modeling_bert.py
