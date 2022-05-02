@@ -61,10 +61,12 @@ python construct.py --domain NewsQA --fold test
 While the example scripts above are for question answering tasks, you can similarly run the code for named entity recognition tasks via the file: {filename}_ner.py.
 
 ## Training
-After preprocessing, run below code to train the model for NewsQA dataset, within KALA framework.
+After preprocessing, the preprocessed dataset files are stored at `./KGC/TASK/$DATA_NAME` with a default setting.
+
+Then, run below code to train the model for NewsQA dataset, within KALA framework.
 
 ```bash
-python run_qa.py
+python run_qa.py --data_dir ./KGC/TASK/NewsQA
 ```
 
 This code runs 2 epochs of training on NewsQA dataset. It costs approximately 3 hours on single GeForce RTX 2080 Ti GPU.

@@ -41,6 +41,9 @@ def setup_args():
     parser.add_argument("--loc_layer", type=str, default="11")
     parser.add_argument("--domain", type=str, default="NewsQA")
     parser.add_argument("--num_gnn_layers", type=int, default=2)
+
+    parser.add_argument("--checkpoint", type=str, default=None)
+    parser.add_argument("--do_eval", action="store_true")
     args = parser.parse_args()
 
     args.do_lower_case = True

@@ -168,7 +168,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     args.train_file = os.path.join(args.train_file, args.domain, f"{args.fold}_entity.json")
-    args.output_dir = f"./TASK/{args.domain}/results"
+    args.output_dir = f"./TASK/{args.domain}"
     print(args.train_file)
     print(args.output_dir)
 

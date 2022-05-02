@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader, RandomSampler
 from torch.utils.data.distributed import DistributedSampler
 from torch.nn.utils.rnn import pad_sequence
 from tqdm import tqdm
-from transformers import WEIGHTS_NAME, AutoTokenizer, RobertaTokenizer
+from transformers import WEIGHTS_NAME, AutoTokenizer, AutoConfig
 
 logger = logging.getLogger(__name__)
 # logging.disable(logging.WARNING)
@@ -34,6 +34,8 @@ def set_seed(seed):
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
 
 def to_list(tensor):
     return tensor.detach().cpu().tolist()
@@ -45,9 +47,17 @@ def initialize_model(args, entity_embeddings):
     model_cls = BertForExtractiveQA
     tokenizer = AutoTokenizer.from_pretrained(lm_ckpt)
     args.tokenizer = tokenizer
-    model = model_cls.from_pretrained(lm_ckpt, 
-                                      args=args, 
-                                      entity_embeddings=entity_embeddings)
+    if args.checkpoint is None:
+        model = model_cls.from_pretrained(lm_ckpt, 
+                                        args=args, 
+                                        entity_embeddings=entity_embeddings)
+    else:
+        print(f"Load checkpoint from {args.checkpoint}")
+        config = AutoConfig.from_pretrained(lm_ckpt)
+        model = model_cls.from_pretrained(args.checkpoint, 
+                                        config=config,
+                                        args=args, 
+                                        entity_embeddings=entity_embeddings)
 
     return model, tokenizer
 
@@ -84,25 +94,26 @@ def run(args):
                 results["best_epoch"] = epoch
             model.train()
 
-    trainer = Trainer(
-        args,
-        model=model,
-        dataloader=train_dataloader,
-        num_train_steps=num_train_steps,
-        step_callback=step_callback,
-    )
-    trainer.train()
+    if not args.do_eval:
+        trainer = Trainer(
+            args,
+            model=model,
+            dataloader=train_dataloader,
+            num_train_steps=num_train_steps,
+            step_callback=step_callback,
+        )
+        trainer.train()
+        print(results)
 
-    print(results)
+        logger.info("Saving the model checkpoint to %s", args.output_dir)
+        torch.save(best_weights[0], os.path.join(args.output_dir, WEIGHTS_NAME))
 
-    logger.info("Saving the model checkpoint to %s", args.output_dir)
-    torch.save(best_weights[0], os.path.join(args.output_dir, WEIGHTS_NAME))
+        # Load the best model on validation set for evaluation
+        model, tokenizer = initialize_model(args, entity_embeddings)
+        model.load_state_dict(torch.load(os.path.join(args.output_dir, WEIGHTS_NAME), map_location="cpu"))
+        model.to(args.device)
 
     # Evaluate
-    model, tokenizer = initialize_model(args, entity_embeddings)
-    model.load_state_dict(torch.load(os.path.join(args.output_dir, WEIGHTS_NAME), map_location="cpu"))
-    model.to(args.device)
-
     output_file = os.path.join(args.output_dir, "predictions.json")
     results = evaluate(args, model, fold="test", output_file=output_file)
     
