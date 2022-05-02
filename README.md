@@ -69,6 +69,12 @@ python run_qa.py
 
 This code runs 2 epochs of training on NewsQA dataset. It costs approximately 3 hours on single GeForce RTX 2080 Ti GPU.
 
+## Fine-tuned Checkpoint
+
+We provide the fine-tuned checkpoint of KALA on NewsQA dataset.
+
+Download path: [NewsQA_ckpt.zip](https://drive.google.com/file/d/1yVXmAboH-8Es_7fNmwChFypdXrXAZ3Yl/view?usp=sharing)
+
 ## Citation
 If you found the provided code with our paper useful, we kindly requiest that you cite our work.
 ```BibTex
