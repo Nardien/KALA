@@ -5,6 +5,7 @@ Official Code Repository for the paper "KALA: Knowledge-Augmented Language Model
 In this repository, we implement the training code for our KALA framework inclduing the preprocessing the task dataset.
 
 ## Abstract
+<img align="middle" width="900" src="https://github.com/Nardien/KALA/blob/main/images/concept_fig.png">
 Pre-trained language models (PLMs) have achieved remarkable success on various natural language understanding tasks.
 Simple fine-tuning of PLMs, on the other hand, might be suboptimal for domain-specific tasks because they cannot possibly cover knowledge from all domains.
 While adaptive pre-training of PLMs can help them obtain domain-specific knowledge, it requires a large training cost.
