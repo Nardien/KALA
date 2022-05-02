@@ -77,6 +77,12 @@ We provide the fine-tuned checkpoint of KALA on NewsQA dataset.
 
 Download path: [NewsQA_ckpt.zip](https://drive.google.com/file/d/1yVXmAboH-8Es_7fNmwChFypdXrXAZ3Yl/view?usp=sharing)
 
+After unzip the downloaded file, run following code to reproduce the result on NewsQA dataset.
+
+```bash
+python run_qa.py --do_eval --checkpoint ./NewsQA_ckpt/ --data_dir ./KGC/TASK/NewsQA
+```
+
 ## Citation
 If you found the provided code with our paper useful, we kindly requiest that you cite our work.
 ```BibTex
