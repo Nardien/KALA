@@ -48,6 +48,7 @@ python preprocess.py NewsQA test
 ```
 
 2. Knowledge Graph Construction
+
 Before start, please download pre-trained Relation Extraction model and place it on the `RE_checkpoint` directory. 
 
 Download path: [model.pth](https://drive.google.com/file/d/1XrUUb6aDWTTPAV_CfTBWGh6sYr89w9OW/view?usp=sharing)
