@@ -2,7 +2,7 @@
 
 Official Code Repository for the paper "KALA: Knowledge-Augmented Language Model Adaptation" (NAACL 2022): https://arxiv.org/abs/2204.10555.
 
-In this repository, we implement the training code for our KALA framework inclduing the preprocessing the task dataset.
+In this repository, we implement the training code for our KALA framework including the preprocessing the task dataset.
 
 ## Abstract
 <img align="middle" width="900" src="https://github.com/Nardien/KALA/blob/master/images/concept_fig.png">
