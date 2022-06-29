@@ -63,6 +63,8 @@ python construct.py --domain NewsQA --fold test
 
 While the example scripts above are for question answering tasks, you can similarly run the code for named entity recognition tasks via the file: {filename}_ner.py.
 
+Furthermore, you can directly import the preprocessed datasets for NER tasks by downloading the file [here](https://1drv.ms/u/s!Aj5JerV8SMDyi59jrrKrSK-HUw6wGQ?e=paPdRX), and then place it on the `./KGC/TASK` directory. For example, in regard to the CONLL2003 dataset, `./KGC/TASK/conll2003/results/{train_0.05.json, validation_0.05.json, test_0.05.json, train_entity_embeddings_0.05.pkl}`.
+
 ## Training
 After preprocessing, the preprocessed dataset files are stored at `./KGC/TASK/$DATA_NAME` with a default setting.
 
