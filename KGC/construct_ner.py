@@ -180,7 +180,9 @@ def construct(args):
         assert tokenized_inputs.input_ids == example['input_ids']
 
         doc_id = example['id']
-        entities = doc_id_to_entities[doc_id]
+        entities = []
+        if doc_id in doc_id_to_entities.keys():
+            entities = doc_id_to_entities[doc_id]
 
         wikidata_ids = []
         ent_pos = np.zeros((args.max_ent_cnt, args.max_length), dtype='int32')
