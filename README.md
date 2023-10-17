@@ -17,6 +17,7 @@ We validate the performance of our KALA on question answering and named entity r
 The results show that, despite being computationally efficient, our KALA largely outperforms adaptive pre-training.
 
 ## Installation
+Python version: 3.6.0 (thanks to @jiangxinke)
 ```bash
 python -m pip install -r requirements.txt
 ```
@@ -36,6 +37,8 @@ If you are interested in how the KG is constructed, please refer to codes in `KG
 1. Entity Extraction
 
 Please download `en_core_web_md` in spacy library and spaCy-entity-linker library here: https://github.com/egerber/spaCy-entity-linker.
+
+Be sure to run `python -m spacy_entity_linker "download_knowledge_base"` command to download the knowledge base for entity linker (thanks to @jiangxinke).
 
 They are needed to correctly extract entities from the context, and to map them to the corresponding Wikidata ids.
 
@@ -91,10 +94,20 @@ python run_qa.py --do_eval --checkpoint ./NewsQA_ckpt/ --data_dir ./KGC/TASK/New
 ## Citation
 If you found the provided code with our paper useful, we kindly request that you cite our work.
 ```BibTex
-@article{kang2022kala,
-  title={KALA: Knowledge-Augmented Language Model Adaptation},
-  author={Kang, Minki and Baek, Jinheon and Hwang, Sung Ju},
-  journal={arXiv preprint arXiv:2204.10555},
-  year={2022}
+@inproceedings{kang2022kala,
+  author       = {Minki Kang and
+                  Jinheon Baek and
+                  Sung Ju Hwang},
+  editor       = {Marine Carpuat and
+                  Marie{-}Catherine de Marneffe and
+                  Iv{\'{a}}n Vladimir Meza Ru{\'{\i}}z},
+  title        = {{KALA:} Knowledge-Augmented Language Model Adaptation},
+  booktitle    = {Proceedings of the 2022 Conference of the North American Chapter of
+                  the Association for Computational Linguistics: Human Language Technologies,
+                  {NAACL} 2022, Seattle, WA, United States, July 10-15, 2022},
+  pages        = {5144--5167},
+  publisher    = {Association for Computational Linguistics},
+  year         = {2022},
+  url          = {https://doi.org/10.18653/v1/2022.naacl-main.379},
 }
 ```
